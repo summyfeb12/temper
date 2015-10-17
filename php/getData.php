@@ -9,13 +9,13 @@
     mysql_select_db("hurricanes", $con);
 
 
-    $query = "select * from pacific";
+    $query = "select * from atlantic where hid='$choice'  ";
     $result = mysql_query($query);
 	
 
     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) 
     {
-        array_push($return_arrall,array($row['hlat'],$row['hlon'],$row['hname']));
+        array_push($return_arrall,array($row['hid'],$row['hname'],$row['hdate'],$row['htime'],$row['htype'],$row['hstatus'],$row['hlat'],$row['hlon'],$row['hwind'],$row['hpres']));
     }	 
         echo json_encode($return_arrall);
 ?>

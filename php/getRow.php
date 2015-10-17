@@ -9,7 +9,7 @@
 	if(!$con) die('General Connection Error!');									      
     mysql_select_db("hurricanes", $con);
     
-    $query = "select * from pacific";//$choice' ";
+    $query = "select rowcount from summary where hid='$choice'";//$choice' ";
     //echo $query;
     $result = mysql_query($query);
     
