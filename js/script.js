@@ -15,6 +15,9 @@
       var latvalues=[];
       var lngvalues=[];
       var hwind=[];
+      var h34=[];
+      var h50=[];
+      var h64=[];
       var pointsAdded = 0;
 	  var var_ret=[];
 	  var limit=0;
@@ -23,6 +26,8 @@
 	  var flag=true;
 	  var playstate=[];
 	  var polyline = L.polyline([]).addTo(map);
+	  var hurricanes_layer = new L.LayerGroup();	
+
 
 	 
 
@@ -90,7 +95,13 @@ function get_Data(hurr_id)
 				
 					lngvalues.push(0-var_ret[i][7]); 
 
-					hwind.push(+var_ret[i][8]);         
+					hwind.push(+var_ret[i][8]); 
+
+					h34.push((((+var_ret[i][10])+(+var_ret[i][11])+(+var_ret[i][12])+(+var_ret[i][13]))/4)*1852);
+					h50.push((((+var_ret[i][14])+(+var_ret[i][15])+(+var_ret[i][16])+(+var_ret[i][17]))/4)*1852);
+					h64.push((((+var_ret[i][18])+(+var_ret[i][19])+(+var_ret[i][20])+(+var_ret[i][21]))/4)*1852);
+
+
 				}
 						
 				draw_hurricanes();  // Draw each hurricane
@@ -103,12 +114,35 @@ function get_Data(hurr_id)
 				// Below code draws polyline along the path of the hurricane
 			   polyline.addLatLng(
 			   L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
-			   L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],(hwind[pointsAdded]-100)*5000,{
+			  /* L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],(hwind[pointsAdded]-100)*5000,{
 			    color: 'red',
 			    fillColor: '#f03',
 			    fillOpacity: 0.2,
 			    stroke: false
-			}).addTo(map);
+			}).addTo(map);*/
+      			if(h34[pointsAdded]!=(-999) || h50[pointsAdded]!=(-999) || h64[pointsAdded]!=(-999))
+      			{
+      				
+				      L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],h34[pointsAdded],{
+							    color: 'red',
+							    fillColor: '#260689', //Blue
+							    fillOpacity: 0.2,
+							    stroke: false
+							}).addTo(map);
+				      L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],h50[pointsAdded],{
+							    color: 'blue',
+							    fillColor: '#BAFF1E', //Purple
+							    fillOpacity: 0.2,
+							    stroke: false
+							}).addTo(map);
+				      L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],h64[pointsAdded],{
+							    color: 'blue',
+							    fillColor: '#E60000', //Red
+							    fillOpacity: 0.2,
+							    stroke: false
+							}).addTo(map);
+		 	 	}
+
 			  
 			  //Below code translates the hurricane marker along it's path
 			  //	 map.setView([latvalues[pointsAdded],lngvalues[pointsAdded]]);
