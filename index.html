@@ -5,6 +5,8 @@
 		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 	 <title>Shadows in the Rain</title>
 		<meta charset="utf-8" />
+		<script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+		<link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
 		<link rel="stylesheet" href="css/style.css" />
@@ -15,7 +17,9 @@
 		<div id="map" style="width: 80vw; height: 80vh"></div>
 		
 	<!-- Load all script Files-->
-	
+	<div id="map">
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 	   <script src="http://d3js.org/d3.v3.min.js"></script>
 	   <script type="text/javascript" src="js/script.js"></script>
@@ -27,7 +31,7 @@
 	
 	  
 	<input type="text" id="text">
-			<button class="submit" onClick="draw_hurricanes()">Submit</button>
+			<button class="submit" onClick="plot_all_hurricanes()">Submit</button>
 			
 			<button class="submit" onClick="increase_speed()">Increase</button>
 			<button class="submit" onClick="decrease_speed()">Decrease</button>

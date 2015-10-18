@@ -4,9 +4,7 @@
      
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
             maxZoom: 18,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            
             id: 'mapbox.streets',
            continuousWorld: 'true',
            noWrap: 'true'
@@ -26,7 +24,9 @@
 	  var playstate=[];
 	  var polyline = L.polyline([]).addTo(map);
 
- function draw_hurricanes()
+	 
+
+ function plot_all_hurricanes()
 {
 	flag=false;
 	map.removeLayer(polyline);
@@ -36,7 +36,7 @@
 		{
 			
 			console.log(j);
-			getData(identity[j]);
+			get_Data(identity[j]);
 			j++;
 		}
 	j=0;
@@ -52,9 +52,10 @@ function decrease_speed()
 }
 
 
-function getData(hurr_id) 
+function get_Data(hurr_id) 
 	{
-		
+		var marker = L.marker([0, 0]);
+
 		flag=true;
 		console.log(hurr_id);
 		var xmlhttp=false;
@@ -92,27 +93,37 @@ function getData(hurr_id)
 					hwind.push(+var_ret[i][8]);         
 				}
 						
-				add();
+				draw_hurricanes();  // Draw each hurricane
+				
 	
 		
-			function add() 
+			function draw_hurricanes() 
 			{
 				  
-
+				// Below code draws polyline along the path of the hurricane
 			   polyline.addLatLng(
 			   L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
 			   L.circle([latvalues[pointsAdded],lngvalues[pointsAdded]],(hwind[pointsAdded]-100)*5000,{
 			    color: 'red',
 			    fillColor: '#f03',
-			    fillOpacity: 0.5,
+			    fillOpacity: 0.2,
 			    stroke: false
 			}).addTo(map);
-			   
+			  
+			  //Below code translates the hurricane marker along it's path
 			  //	 map.setView([latvalues[pointsAdded],lngvalues[pointsAdded]]);
-
-			   if (++pointsAdded < limit & flag==true) window.setTimeout(function(){add();},speed);
+			  window.setInterval(function() {
+       			marker.setLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));}, speed);
+       			marker.addTo(map);
+			   if (++pointsAdded < limit & flag==true) window.setTimeout(function(){draw_hurricanes();},speed);
 			   
 			}
+		}
+
+		function movemarker()
+		{
+
+
 		}
 		
 		xmlhttp.send(null)
